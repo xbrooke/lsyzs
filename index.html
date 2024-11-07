@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档网站</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <!-- 左侧栏 -->
+        <div id="sidebar">
+            <h2>文档列表</h2>
+            <ul id="doc-titles">
+                <!-- 文档标题列表 -->
+            </ul>
+        </div>
+
+        <!-- 右侧内容区域 -->
+        <div id="content">
+            <!-- 右侧显示文档内容 -->
+        </div>
+    </div>
+    
+    <script>
+        fetch('config.json')
+            .then(response => response.json())
+            .then(data => {
+                const titlesList = document.getElementById('doc-titles');
+                const contentDiv = document.getElementById('content');
+
+                // 生成文档标题列表
+                data.docs.forEach(doc => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = doc.title;
+                    listItem.addEventListener('click', () => {
+                        loadContent(doc.file);
+                        selectTitle(listItem);
+                    });
+                    titlesList.appendChild(listItem);
+                });
+
+                // 默认加载第一个文档内容
+                if (data.docs.length > 0) {
+                    loadContent(data.docs[0].file);
+                    const firstTitle = titlesList.querySelector('li');
+                    selectTitle(firstTitle);
+                }
+
+                function loadContent(file) {
+                    fetch(`docs/${file}`)
+                        .then(response => response.text())
+                        .then(content => {
+                            contentDiv.innerHTML = content;
+                        });
+                }
+
+                function selectTitle(selectedItem) {
+                    // 移除所有标题的选中状态
+                    const allTitles = titlesList.querySelectorAll('li');
+                    allTitles.forEach(item => item.classList.remove('selected'));
+
+                    // 设置当前选中的标题
+                    selectedItem.classList.add('selected');
+                }
+            });
+    </script>
+</body>
+</html>

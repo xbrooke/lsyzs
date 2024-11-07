@@ -1,0 +1,111 @@
+/* 整体布局 */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  background-color: #f7f9fc; /* 背景色 */
+}
+
+/* 容器 */
+#container {
+  display: flex;
+  width: 100%;
+}
+
+/* 左侧栏 */
+#sidebar {
+  width: 250px;
+  background-color: #34495e;  /* 深色背景 */
+  color: #ecf0f1;  /* 白色字体 */
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);  /* 右边加上阴影 */
+  transition: width 0.3s ease; /* 动画过渡 */
+}
+
+/* 左侧栏文档标题 */
+#sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#sidebar li {
+  margin: 15px 0;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;  /* 圆角 */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #bdc3c7;  /* 设置文档标题为浅灰色 */
+}
+
+#sidebar li:hover {
+  background-color: #1abc9c; /* 悬停时的颜色 */
+  color: #ffffff; /* 悬停时字体颜色改为白色 */
+}
+
+/* 选中的文档标题 */
+#sidebar li.selected {
+  background-color: #2980b9;  /* 选中时背景色 */
+  color: #ffffff;  /* 选中时字体颜色改为白色 */
+}
+
+/* 右侧内容区域 */
+#content {
+  margin-left: 250px; /* 留出左侧栏宽度 */
+  padding: 30px;
+  overflow-y: auto;
+  height: 100vh;
+  flex: 1;
+  background-color: #ffffff; /* 背景色 */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);  /* 内部阴影 */
+  transition: margin-left 0.3s ease; /* 动画过渡 */
+}
+
+/* 右侧文档内容样式 */
+#content h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+#content p {
+  line-height: 1.8;
+  font-size: 1.1em;
+  color: #34495e;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+  #sidebar {
+      width: 200px;
+  }
+
+  #content {
+      margin-left: 200px;
+      padding: 20px;
+  }
+
+  #sidebar li {
+      font-size: 1.1em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* 小屏设备时，左侧栏会折叠 */
+  #sidebar {
+      width: 0;
+      padding: 0;
+  }
+
+  #content {
+      margin-left: 0;
+      padding: 15px;
+  }
+
+  #container {
+      flex-direction: column;
+  }
+}
